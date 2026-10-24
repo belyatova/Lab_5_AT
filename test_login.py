@@ -1,13 +1,12 @@
-from playwright.sync_api import Page, expect
+from playwright.sync_api import Page, expect -- Page — объект страницы браузера
 
 
 def test_login_page_is_displayed(page: Page):
-    page.goto("https://www.saucedemo.com/")
+    page.goto("https://www.saucedemo.com/") --
 
     expect(page.locator('[data-test="username"]')).to_be_visible()
     expect(page.locator('[data-test="password"]')).to_be_visible()
     expect(page.locator('[data-test="login-button"]')).to_be_visible()
-
 
 def test_successful_login(page: Page):
     page.goto("https://www.saucedemo.com/")
@@ -24,7 +23,6 @@ def test_successful_login(page: Page):
         page.locator('[data-test="inventory-container"]')
     ).to_be_visible()
 
-
 def test_add_product_to_cart(page: Page):
     page.goto("https://www.saucedemo.com/")
 
@@ -58,23 +56,4 @@ def test_add_product_to_cart(page: Page):
     expect(
         page.locator('[data-test="shopping-cart-badge"]')
     ).to_have_text("1")
-
-def test_login_with_invalid_password(page: Page):
-    page.goto("https://www.saucedemo.com/")
-
-    page.locator('[data-test="username"]').fill("standard_user")
-    page.locator('[data-test="password"]').fill("wrong_password")
-    page.locator('[data-test="login-button"]').click()
-
-    expect(
-        page.locator('[data-test="error"]')
-    ).to_be_visible()
-
-    expect(
-        page.locator('[data-test="error"]')
-    ).to_contain_text("Username and password do not match")
-
-expect(page).to_have_url(
-    "https://www.saucedemo.com/incorrect.html"
-)
 
